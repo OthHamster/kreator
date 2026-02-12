@@ -4,7 +4,7 @@
   "description": "",
   "main": "src/server.js",
   "scripts": {
-    "dev": "node scripts/kill-port.cjs 4000 && nodemon src/server.js",
+    "dev": "node scripts/kill-port.cjs 4000 && nodemon --watch src --ext js,cjs,mjs,json src/server.js",
     "start": "node scripts/kill-port.cjs 4000 && node src/server.js"
   },
   "keywords": [],
