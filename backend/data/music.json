@@ -1,0 +1,59 @@
+{
+  "nodes": [
+    {
+      "id": 6,
+      "content": "id-test",
+      "level": "single",
+      "category": "form"
+    },
+    {
+      "id": 0,
+      "content": "bababoi",
+      "level": "single",
+      "category": "form"
+    },
+    {
+      "id": 1,
+      "content": "a'a'a",
+      "level": "single",
+      "category": "form"
+    },
+    {
+      "id": 2,
+      "content": "专辑：Kind of Blue（调式爵士里程碑作品）。",
+      "level": "album",
+      "category": "form"
+    },
+    {
+      "id": 3,
+      "content": "单曲：So What（以调式进行展开，留白与对话感强）。",
+      "level": "single",
+      "category": "form"
+    },
+    {
+      "id": 4,
+      "content": "曲句：开头主题动机（简洁动机反复，形成强记忆点）。",
+      "level": "phrase",
+      "category": "material"
+    },
+    {
+      "id": 5,
+      "content": "音色：弱音器小号（柔和、带空气感，适合营造距离感）。",
+      "level": "timbre",
+      "category": "material"
+    }
+  ],
+  "recipes": [
+    {
+      "id": 0,
+      "knowledgePoints": [
+        2,
+        3,
+        4
+      ],
+      "procedure": "先确定调式与速度；根据 ii-V-I 写和声骨架；加入切分节奏并在副旋律补充回应动机；最后按段落检查衔接。",
+      "level": "single",
+      "description": "用于生成一段具有爵士感的单曲编配流程。"
+    }
+  ]
+}
