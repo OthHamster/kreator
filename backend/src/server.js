@@ -1,6 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const fs = require("fs/promises");
+const fsSync = require("fs");
 const path = require("path");
 
 let libraryDbModule;
