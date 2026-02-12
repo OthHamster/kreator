@@ -49,7 +49,7 @@ npm run dev
 会同时启动：
 
 - 后端：`http://localhost:4000`
-- 前端：`http://localhost:5173`
+- 前端：`http://localhost:3000`
 
 > 已配置固定端口，并会在启动前自动停止占用端口的旧进程。
 >
@@ -67,7 +67,7 @@ npm install
 npm run dev
 ```
 
-### 2) 启动前端（端口 5173）
+### 2) 启动前端（端口 3000）
 
 ```bash
 cd frontend
@@ -75,7 +75,7 @@ npm install
 npm run dev
 ```
 
-访问：`http://localhost:5173`
+访问：`http://localhost:3000`
 
 > 前端已配置代理：
 >
