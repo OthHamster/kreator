@@ -4,12 +4,30 @@ const fs = require("fs/promises");
 const fsSync = require("fs");
 const path = require("path");
 const LIBRARY_ROOT_CANDIDATES = ["Library", "library", "Kreator", "kreator"];
-const LIBRARY_ROOT =
-  LIBRARY_ROOT_CANDIDATES.map((name) =>
-    path.join(__dirname, "..", "..", name),
-  ).find((dir) => fsSync.existsSync(dir)) ||
-  path.join(__dirname, "..", "..", "Library");
-const LIBRARY_DB_MODULE_PATH = path.join(LIBRARY_ROOT, "db");
+const LIBRARY_ROOT_OPTIONS = LIBRARY_ROOT_CANDIDATES.map((name) =>
+  path.join(__dirname, "..", "..", name),
+);
+
+function resolveLibraryDbModulePath() {
+  for (const root of LIBRARY_ROOT_OPTIONS) {
+    const modulePath = path.join(root, "db");
+    try {
+      require.resolve(modulePath);
+      return modulePath;
+    } catch (error) {
+      // try next candidate
+    }
+  }
+
+  throw new Error(
+    `Cannot resolve library db module from candidates: ${LIBRARY_ROOT_OPTIONS.join(
+      ", ",
+    )}`,
+  );
+}
+
+const LIBRARY_DB_MODULE_PATH = resolveLibraryDbModulePath();
+const LIBRARY_ROOT = path.dirname(LIBRARY_DB_MODULE_PATH);
 const {
   initDb: initLibraryDb,
   getEntryById,
