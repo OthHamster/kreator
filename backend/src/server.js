@@ -3,6 +3,13 @@ const cors = require("cors");
 const fs = require("fs/promises");
 const fsSync = require("fs");
 const path = require("path");
+const LIBRARY_ROOT_CANDIDATES = ["Library", "library", "Kreator", "kreator"];
+const LIBRARY_ROOT =
+  LIBRARY_ROOT_CANDIDATES.map((name) =>
+    path.join(__dirname, "..", "..", name),
+  ).find((dir) => fsSync.existsSync(dir)) ||
+  path.join(__dirname, "..", "..", "Library");
+const LIBRARY_DB_MODULE_PATH = path.join(LIBRARY_ROOT, "db");
 const {
   initDb: initLibraryDb,
   getEntryById,
@@ -17,7 +24,7 @@ const {
   listNewEntries,
   deleteRefinedEntryById,
   deleteEntryById,
-} = require("../../Library/db");
+} = require(LIBRARY_DB_MODULE_PATH);
 
 const app = express();
 const PORT = process.env.PORT || 4000;
@@ -29,7 +36,7 @@ const INTEGRATION_MAP_FILE = path.join(
   "integration-map.json",
 );
 const LIBRARY_API_PREFIX_DEFAULT = "/library-api";
-const LIBRARY_DATA_DIR = path.join(__dirname, "..", "..", "Library", "data");
+const LIBRARY_DATA_DIR = path.join(LIBRARY_ROOT, "data");
 const LIBRARY_REFINED_JSON_PATH = path.join(LIBRARY_DATA_DIR, "refined.json");
 const LIBRARY_TYPES_JSON_PATH = path.join(LIBRARY_DATA_DIR, "types.json");
 
