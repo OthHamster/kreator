@@ -26,8 +26,21 @@ function resolveLibraryDbModulePath() {
   );
 }
 
-const LIBRARY_DB_MODULE_PATH = resolveLibraryDbModulePath();
-const LIBRARY_ROOT = path.dirname(LIBRARY_DB_MODULE_PATH);
+let libraryDbModule;
+let LIBRARY_ROOT;
+
+try {
+  const libraryDbModulePath = resolveLibraryDbModulePath();
+  libraryDbModule = require(libraryDbModulePath);
+  LIBRARY_ROOT = path.dirname(libraryDbModulePath);
+} catch (error) {
+  console.warn(
+    `[library-db] external module not found, using local fallback: ${error.message}`,
+  );
+  libraryDbModule = require("./library-db-fallback");
+  LIBRARY_ROOT = path.join(__dirname, "..", "data", "library-fallback");
+}
+
 const {
   initDb: initLibraryDb,
   getEntryById,
@@ -42,7 +55,7 @@ const {
   listNewEntries,
   deleteRefinedEntryById,
   deleteEntryById,
-} = require(LIBRARY_DB_MODULE_PATH);
+} = libraryDbModule;
 
 const app = express();
 const PORT = process.env.PORT || 4000;
