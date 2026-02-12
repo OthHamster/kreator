@@ -1,44 +1,20 @@
 const express = require("express");
 const cors = require("cors");
 const fs = require("fs/promises");
-const fsSync = require("fs");
 const path = require("path");
-const LIBRARY_ROOT_CANDIDATES = ["Library", "library", "Kreator", "kreator"];
-const LIBRARY_ROOT_OPTIONS = LIBRARY_ROOT_CANDIDATES.map((name) =>
-  path.join(__dirname, "..", "..", name),
-);
-
-function resolveLibraryDbModulePath() {
-  for (const root of LIBRARY_ROOT_OPTIONS) {
-    const modulePath = path.join(root, "db");
-    try {
-      require.resolve(modulePath);
-      return modulePath;
-    } catch (error) {
-      // try next candidate
-    }
-  }
-
-  throw new Error(
-    `Cannot resolve library db module from candidates: ${LIBRARY_ROOT_OPTIONS.join(
-      ", ",
-    )}`,
-  );
-}
 
 let libraryDbModule;
-let LIBRARY_ROOT;
+let LIBRARY_DATA_DIR;
 
 try {
-  const libraryDbModulePath = resolveLibraryDbModulePath();
-  libraryDbModule = require(libraryDbModulePath);
-  LIBRARY_ROOT = path.dirname(libraryDbModulePath);
+  libraryDbModule = require("./library-db-sqlite");
+  LIBRARY_DATA_DIR = libraryDbModule.DATA_DIR;
 } catch (error) {
   console.warn(
-    `[library-db] external module not found, using local fallback: ${error.message}`,
+    `[library-db] sqlite module unavailable, using local fallback: ${error.message}`,
   );
   libraryDbModule = require("./library-db-fallback");
-  LIBRARY_ROOT = path.join(__dirname, "..", "data", "library-fallback");
+  LIBRARY_DATA_DIR = libraryDbModule.DATA_DIR;
 }
 
 const {
@@ -67,7 +43,6 @@ const INTEGRATION_MAP_FILE = path.join(
   "integration-map.json",
 );
 const LIBRARY_API_PREFIX_DEFAULT = "/library-api";
-const LIBRARY_DATA_DIR = path.join(LIBRARY_ROOT, "data");
 const LIBRARY_REFINED_JSON_PATH = path.join(LIBRARY_DATA_DIR, "refined.json");
 const LIBRARY_TYPES_JSON_PATH = path.join(LIBRARY_DATA_DIR, "types.json");
 

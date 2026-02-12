@@ -55,7 +55,9 @@ npm run dev
 >
 > 说明：后端已整合 Library API，文档录入与知识库共用同一个后端端口（`4000`）。
 >
-> 若部署环境缺少 `Library/db.js`（或历史 `Kreator/db.js`），后端会自动切换到 `backend/data/library-fallback` 本地存储模式，确保服务可启动。
+> 文档库 SQLite 已并入主后端依赖（`backend/package.json` 中的 `sqlite3`），无需再到子目录单独安装依赖。
+>
+> 若部署环境缺少 `sqlite3` 运行条件，后端会自动切换到 `backend/data/library-fallback` 本地存储模式，确保服务可启动。
 
 ### 1) 启动后端（端口 4000）
 
